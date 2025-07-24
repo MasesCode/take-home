@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tesla_chatbot_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=local
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - VECTOR_DB_KEY=${VECTOR_DB_KEY}
+      - VECTOR_DB_URL=${VECTOR_DB_URL}
+    networks:
+      - tesla-chatbot-network
+
+networks:
+  tesla-chatbot-network:
+    driver: bridge 
